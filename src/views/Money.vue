@@ -18,7 +18,7 @@
       <div>
         <label class="notes">
           <span class="name">备注</span>
-          <input type="text" />
+          <input type="text" placeholder="添加备注" />
         </label>
       </div>
       <!-- 支出/收入 -->
@@ -58,4 +58,70 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.tags {
+  font-size: 14px;
+  padding: 16px;
+  > .current {
+    display: flex;
+    align-items: center;
+    > li {
+      background-color: #d9d9d9;
+      height: 24px;
+      line-height: 24px;
+      border-radius: 12px;
+      padding: 0 16px;
+      margin-right: 12px;
+    }
+  }
+  > .new {
+    padding-top: 16px;
+    button {
+      background: transparent;
+      border: none;
+      color: #999;
+      border-bottom: 1px solid;
+      padding: 0 4px;
+    }
+  }
+}
+.notes {
+  display: block;
+  background-color: #f5f5f5;
+  font-size: 14px;
+  padding-left: 16px;
+  display: flex;
+  align-items: center;
+  > .name {
+    padding-right: 16px;
+  }
+  input {
+    height: 64px;
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    padding-right: 16px;
+  }
+}
+.types {
+  background-color: #c4c4c4;
+  display: flex;
+  justify-content: space-around;
+  > li {
+    font-size: 24px;
+    line-height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    position: relative;
+    &.selected::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: #333;
+    }
+  }
+}
 </style>
