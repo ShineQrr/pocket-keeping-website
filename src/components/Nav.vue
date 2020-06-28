@@ -23,8 +23,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/style/helper.scss";
 // 导航栏样式
 nav {
+  @extend %outerShadow;
   display: flex;
   justify-content: space-around;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
