@@ -36,6 +36,7 @@ export default {
     font-family: Consolas, monospace;
     padding: 9px 16px;
     text-align: right;
+    color: #2b9eed;
   }
   .buttons {
     @extend %clearFix;
