@@ -2,7 +2,7 @@
   <div>
     <Layout class-prefix="layout">
       <!-- 顶部标签 -->
-      <Tags></Tags>
+      <Tags :data-source.sync="tags"></Tags>
       <!-- 备注栏 -->
       <Notes></Notes>
       <!-- 支出/收入 -->
@@ -25,6 +25,11 @@ export default {
     Types,
     Tags,
     Notes
+  },
+  data() {
+    return {
+      tags: ["衣", "食", "住", "行", "玩"]
+    };
   }
 };
 </script>
