@@ -1,7 +1,6 @@
 <template>
   <div>
     <Layout class-prefix="layout">
-      {{ recordList }}
       <!-- 顶部标签 -->
       <Tags :data-source.sync="tags" @update:selected="onUpdateTags"></Tags>
       <!-- 备注栏 -->
