@@ -7,7 +7,7 @@
       <!-- 备注栏 -->
       <Notes @update:value="onUpdateNotes"></Notes>
       <!-- 支出/收入 -->
-      <Types @update:value="onUpdateType"></Types>
+      <Types :value.sync="record.type"></Types>
       <!-- 数字面板 -->
       <NumberPad @update:value="onUpdateAmount"></NumberPad>
     </Layout>
@@ -41,9 +41,6 @@ export default class Money extends Vue {
   }
   onUpdateNotes(notes: string) {
     this.record.notes = notes;
-  }
-  onUpdateType(type: string) {
-    this.record.type = type;
   }
   onUpdateAmount(value: string) {
     this.record.amount = parseFloat(value);
