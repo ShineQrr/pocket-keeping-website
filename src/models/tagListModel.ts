@@ -1,7 +1,11 @@
 const localStorageKeyName = 'tagList';
+type Tag = {
+    id: string;
+    name: string;
+}
 type TagListModel = {
-    data: string[];
-    fetch: () => string[];
+    data: Tag[];
+    fetch: () => Tag[];
     add: (name: string) => { code: number; message: string };// 1 表示成功 0表示name重复
     save: () => void;
 }
@@ -13,10 +17,11 @@ const tagListModel: TagListModel = {
         return this.data;
     },
     add(name: string) {
-        if (this.data.includes(name)) {
+        const nameList = this.data.map(item => item.name)
+        if (nameList.includes(name)) {
             return { code: 0, message: 'duplicated' };
         }
-        this.data.push(name)
+        this.data.push({ id: name, name: name })
         this.save()
         return { code: 1, message: 'success' };
     },
