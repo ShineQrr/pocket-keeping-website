@@ -4,7 +4,7 @@
       <!-- 顶部标签 -->
       <Tags :data-source.sync="tags" @update:selected="onUpdateTags"></Tags>
       <!-- 备注栏 -->
-      <Notes @update:value="onUpdateNotes"></Notes>
+      <Notes field-name="备注" placeholder="在这里输入备注" @update:value="onUpdateNotes"></Notes>
       <!-- 支出/收入 -->
       <Types :value.sync="record.type"></Types>
       <!-- 数字面板 -->
