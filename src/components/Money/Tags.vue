@@ -3,10 +3,10 @@
     <ul class="current">
       <li
         v-for="item in dataSource"
-        :key="item"
+        :key="item.id"
         @click="toggleTag(item)"
         :class="{selected:selectedTags.includes(item)}"
-      >{{ item }}</li>
+      >{{ item.name }}</li>
     </ul>
     <!-- 新增标签按钮 -->
     <div class="new">
