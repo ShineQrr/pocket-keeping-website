@@ -1,15 +1,22 @@
+import clone from '../lib/clone';
+
 const localStorageKeyName = 'recordList';
 const recordListModel = {
-    clone(data: RecordItem[] | RecordItem) {
-        return JSON.parse(JSON.stringify(data));
+    data: [] as RecordItem[],
+    createItem(record: RecordItem) {
+        const recordCopy: RecordItem = clone(record);
+        recordCopy.createdAt = new Date();
+        // 存储的时候存副本
+        this.data.push(recordCopy);
     },
     // 获取数据
     fetch() {
-        return JSON.parse(window.localStorage.getItem(localStorageKeyName) || "[]") as RecordItem[];
+        this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) || "[]") as RecordItem[];
+        return this.data;
     },
     // 保存数据
-    save(data: RecordItem[]) {
-        window.localStorage.setItem(localStorageKeyName, JSON.stringify(data));
+    save() {
+        window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
     }
 }
 

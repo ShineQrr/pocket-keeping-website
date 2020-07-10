@@ -49,14 +49,16 @@ export default class Money extends Vue {
   }
   saveRecord() {
     // 深拷贝
-    const recordCopy: RecordItem = recordListModel.clone(this.record);
-    recordCopy.createdAt = new Date();
-    // 存储的时候存副本
-    this.recordList.push(recordCopy);
+    recordListModel.createItem(this.record);
+    // const recordCopy: RecordItem = recordListModel.clone(this.record);
+    // recordCopy.createdAt = new Date();
+    // // 存储的时候存副本
+    // this.recordList.push(recordCopy);
   }
   @Watch("recordList")
   onRecordListChange() {
-    recordListModel.save(this.recordList);
+    // recordListModel.save(this.recordList);
+    recordListModel.save();
   }
 }
 </script>
