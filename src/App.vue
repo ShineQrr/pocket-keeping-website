@@ -4,7 +4,7 @@
   </div>
 </template>
 
-// 全局样式 因此不加scoped
+//  全局样式 因此不加scoped
 <style lang="scss">
 @import "~@/assets/style/reset.scss";
 body {
