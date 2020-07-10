@@ -1,3 +1,4 @@
+import createId from '../lib/createId';
 const localStorageKeyName = 'tagList';
 type Tag = {
     id: string;
@@ -23,7 +24,8 @@ const tagListModel: TagListModel = {
         if (nameList.includes(name)) {
             return { code: 0, message: 'duplicated' };
         }
-        this.data.push({ id: name, name: name })
+        const id = createId().toString();
+        this.data.push({ id, name: name })
         this.save()
         return { code: 1, message: 'success' };
     },
