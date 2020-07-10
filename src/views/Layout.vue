@@ -1,3 +1,4 @@
+
 <template>
   <div class="layout-wrapper">
     <div class="content" :class="classPrefix && `${classPrefix}-content`">
@@ -8,9 +9,11 @@
 </template>
 
 <script lang="ts">
+import Nav from "@/components/Nav.vue";
 export default {
   props: ["classPrefix"],
-  name: "Layout"
+  name: "Layout",
+  components: { Nav }
 };
 </script>
 
