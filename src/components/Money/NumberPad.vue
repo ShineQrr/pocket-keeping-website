@@ -26,7 +26,9 @@ import { Component } from "vue-property-decorator";
 
 @Component
 export default class NumberPad extends Vue {
+  // 初始输出值为0
   output = "0";
+  // 点击数字按钮与. 则执行inputContent
   inputContent(event: MouseEvent) {
     const button = event.target as HTMLButtonElement;
     const input = button.textContent as string;
@@ -34,6 +36,7 @@ export default class NumberPad extends Vue {
     if (this.output.length === 16) {
       return;
     }
+    // 如果输出是0，则下一个输出为输入的值；只能有一个.；
     if (this.output === "0" && "0123456789".includes(input)) {
       this.output = input;
     } else if (this.output.includes(".") && input === ".") {
@@ -42,6 +45,7 @@ export default class NumberPad extends Vue {
       this.output += input;
     }
   }
+  // 删除output最后一位数字
   remove() {
     if (this.output.length === 1) {
       this.output = "0";
@@ -49,9 +53,11 @@ export default class NumberPad extends Vue {
       this.output = this.output.slice(0, -1);
     }
   }
+  // 清空output
   clear() {
     this.output = "0";
   }
+  // 点击ok确定
   determine() {
     this.$emit("update:value", this.output);
     this.$emit("submit", this.output);
