@@ -14,7 +14,7 @@ Vue.component('Icon', Icon)
 
 window.tagList = tagListModel.fetch();
 window.addTag = (name: string) => {
-  const res = tagListModel.add(name);
+  const res = tagListModel.createItem(name);
   if (res.code == 0) {
     window.alert("标签名重复！");
   } else if (res.code == 1) {

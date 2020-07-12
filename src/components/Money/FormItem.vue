@@ -1,14 +1,13 @@
 <template>
   <div>
     <label class="notes">
-      <span class="name">{{this.fieldName}}</span>
+      <span class="name">{{ fieldName }}</span>
       <input
         type="text"
         :value="value"
         @input="onValueChanged($event.target.value)"
         :placeholder="placeholder"
       />
-      <!-- <input type="text" :value="value" @input="changeNotes" placeholder="添加备注" /> -->
     </label>
   </div>
 </template>

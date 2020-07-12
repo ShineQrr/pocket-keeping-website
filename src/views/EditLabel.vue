@@ -32,13 +32,15 @@ export default class EditLabel extends Vue {
     const id = this.$route.params.id;
     tagListModel.fetch();
     const tags = tagListModel.data;
-    const tag = tags.filter(item => item.id === id)[0];
-    if (tag) {
-      this.tag = tag;
+    // 获取当前选中的标签名
+    const selectedTag = tags.filter(item => item.id === id)[0];
+    if (selectedTag) {
+      this.tag = selectedTag;
     } else {
       this.$router.replace("/404");
     }
   }
+  // 当用户编辑标签名，触发updateTag
   updateTag(name: string) {
     if (this.tag) {
       tagListModel.update(this.tag.id, name);

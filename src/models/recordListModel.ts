@@ -1,9 +1,11 @@
 import clone from '../lib/clone';
 
-const localStorageKeyName = 'recordList';
+const LOCAL_STORAGE_KEY_NAME = 'recordList';
+
 const recordListModel = {
     data: [] as RecordItem[],
     createItem(record: RecordItem) {
+        // 深拷贝
         const recordCopy: RecordItem = clone(record);
         recordCopy.createdAt = new Date();
         // 存储的时候存副本
@@ -11,12 +13,12 @@ const recordListModel = {
     },
     // 获取数据
     fetch() {
-        this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) || "[]") as RecordItem[];
+        this.data = JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY_NAME) || "[]") as RecordItem[];
         return this.data;
     },
     // 保存数据
     save() {
-        window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
+        window.localStorage.setItem(LOCAL_STORAGE_KEY_NAME, JSON.stringify(this.data));
     }
 }
 

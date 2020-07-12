@@ -21,7 +21,9 @@ import { Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class Tags extends Vue {
+  // dataSource为标签名数组,Money.vue中为tags
   @Prop() readonly dataSource: string[] | undefined;
+  // selectedTags为选中标签的数组，选中标签改变样式
   selectedTags: string[] = [];
   toggleTag(tag: string) {
     const tagIndex = this.selectedTags.indexOf(tag);
@@ -32,6 +34,7 @@ export default class Tags extends Vue {
     }
     this.$emit("update:selected", this.selectedTags);
   }
+  // 新增标签
   addTag() {
     const tagName = window.prompt("请输入标签名");
     if (tagName === "") {

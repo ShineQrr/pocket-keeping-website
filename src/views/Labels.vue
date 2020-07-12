@@ -2,13 +2,13 @@
   <div>
     <Layout>
       <div class="tags">
-        <router-link class="tag" v-for="tag in tags" :key="tag.id" :to="`/labels/edit/${tag.id}`">
+        <router-link :to="`/labels/edit/${tag.id}`" class="tag" v-for="tag in tags" :key="tag.id">
           <span>{{ tag.name }}</span>
           <Icon name="right" />
         </router-link>
       </div>
       <div class="createTag-wrapper">
-        <CustomButton class="createTag" @click="createTag()">新建标签</CustomButton>
+        <CustomButton @click="createTag">新建标签</CustomButton>
       </div>
     </Layout>
   </div>
@@ -31,7 +31,7 @@ export default class Labels extends Vue {
   createTag() {
     const name = window.prompt("请输入标签名");
     if (name) {
-      const res = tagListModel.add(name);
+      const res = tagListModel.createItem(name);
       if (res.code == 0) {
         window.alert("标签名重复！");
       } else if (res.code == 1) {
@@ -60,17 +60,9 @@ export default class Labels extends Vue {
     }
   }
 }
-.createTag {
-  background: #1296db;
-  border-radius: 4px;
-  color: white;
-  border: none;
-  height: 40px;
-  padding: 0 16px;
-  &-wrapper {
-    text-align: center;
-    padding: 16px;
-    margin-top: 28px;
-  }
+.createTag-wrapper {
+  text-align: center;
+  padding: 16px;
+  margin-top: 28px;
 }
 </style>

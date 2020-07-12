@@ -1,13 +1,16 @@
 import createId from '../lib/createId';
-const localStorageKeyName = 'tagList';
+
+const LOCAL_STORAGE_KEY_NAME = 'tagList';
+
 type Tag = {
     id: string;
     name: string;
 }
+
 type TagListModel = {
     data: Tag[];
     fetch: () => Tag[];
-    add: (name: string) => { code: number; message: string };// 1 表示成功 0表示name重复
+    createItem: (name: string) => { code: number; message: string };// 1 表示成功 0表示name重复
     save: () => void;
     update: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
     remove: (id: string) => boolean;
@@ -16,18 +19,20 @@ const tagListModel: TagListModel = {
     data: [],
     // 获取数据
     fetch() {
-        this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) || "[]");
+        this.data = JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_KEY_NAME) || "[]");
         return this.data;
     },
-    add(name: string) {
+    createItem(name: string) {
         const nameList = this.data.map(item => item.name)
+        // 标签名不可重复
         if (nameList.includes(name)) {
             return { code: 0, message: 'duplicated' };
+        } else {
+            const id = createId().toString();
+            this.data.push({ id, name })
+            this.save()
+            return { code: 1, message: 'success' };
         }
-        const id = createId().toString();
-        this.data.push({ id, name: name })
-        this.save()
-        return { code: 1, message: 'success' };
     },
     // 更新数据:将对应的id 更新成对应的name
     update(id, name) {
@@ -50,14 +55,14 @@ const tagListModel: TagListModel = {
     },
     // 删除数据
     remove(id: string) {
-        const remainData = this.data.filter(item => item.id !== id)
-        this.data = remainData;
+        const index = this.data.findIndex(item => item.id === id);
+        this.data.splice(index, 1);
         this.save();
         return true;
     },
     // 保存数据
     save() {
-        window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
+        window.localStorage.setItem(LOCAL_STORAGE_KEY_NAME, JSON.stringify(this.data));
     }
 }
 

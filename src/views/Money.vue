@@ -25,6 +25,7 @@ import { Component, Watch } from "vue-property-decorator";
 import recordListModel from "@/models/recordListModel";
 import tagListModel from "@/models/tagListModel";
 
+// 获取localStorage中的数据recordList
 const recordList = recordListModel.fetch();
 // const tagList = tagListModel.fetch();
 
@@ -48,12 +49,7 @@ export default class Money extends Vue {
     this.record.amount = parseFloat(value);
   }
   saveRecord() {
-    // 深拷贝
     recordListModel.createItem(this.record);
-    // const recordCopy: RecordItem = recordListModel.clone(this.record);
-    // recordCopy.createdAt = new Date();
-    // // 存储的时候存副本
-    // this.recordList.push(recordCopy);
   }
   @Watch("recordList")
   onRecordListChange() {
