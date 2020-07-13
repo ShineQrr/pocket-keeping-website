@@ -13,6 +13,7 @@ Vue.component('Layout', Layout)
 Vue.component('Icon', Icon)
 
 window.tagList = tagListModel.fetch();
+
 window.addTag = (name: string) => {
   const res = tagListModel.createItem(name);
   if (res.code == 0) {

@@ -27,7 +27,6 @@ import tagListModel from "@/models/tagListModel";
 
 // 获取localStorage中的数据recordList
 const recordList = recordListModel.fetch();
-// const tagList = tagListModel.fetch();
 
 @Component({
   components: { NumberPad, Types, Tags, FormItem }
@@ -42,18 +41,21 @@ export default class Money extends Vue {
   onUpdateTags(tags: string[]) {
     this.record.tags = tags;
   }
+
   onUpdateNotes(notes: string) {
     this.record.notes = notes;
   }
+
   onUpdateAmount(value: string) {
     this.record.amount = parseFloat(value);
   }
+
   saveRecord() {
     recordListModel.createItem(this.record);
   }
+
   @Watch("recordList")
   onRecordListChange() {
-    // recordListModel.save(this.recordList);
     recordListModel.save();
   }
 }
