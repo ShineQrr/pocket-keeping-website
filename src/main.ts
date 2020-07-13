@@ -14,6 +14,9 @@ Vue.component('Icon', Icon)
 
 window.tagList = tagListModel.fetch();
 
+window.findTag = (id: string) => {
+  return window.tagList.filter(item => item.id === id)[0]
+}
 window.addTag = (name: string) => {
   const res = tagListModel.createItem(name);
   if (res.code == 0) {
@@ -21,7 +24,15 @@ window.addTag = (name: string) => {
   } else if (res.code == 1) {
     window.alert("新增标签成功！");
   }
-}
+};
+
+window.removeTag = (id: string) => {
+  return tagListModel.remove(id);
+};
+
+window.updateTag = (id: string, name: string) => {
+  return tagListModel.update(id, name);
+};
 
 new Vue({
   router,

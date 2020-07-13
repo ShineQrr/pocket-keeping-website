@@ -23,7 +23,6 @@ import Tags from "@/components/Money/Tags.vue";
 import FormItem from "@/components/Money/FormItem.vue";
 import { Component, Watch } from "vue-property-decorator";
 import recordListModel from "@/models/recordListModel";
-import tagListModel from "@/models/tagListModel";
 
 // 获取localStorage中的数据recordList
 const recordList = recordListModel.fetch();
@@ -35,9 +34,7 @@ export default class Money extends Vue {
   tags = window.tagList;
   record: RecordItem = { tags: [], notes: "", type: "-", amount: 0 };
   recordList: RecordItem[] = recordList;
-  // recordList: RecordItem[] = JSON.parse(
-  //   window.localStorage.getItem("recordList") || "[]"
-  // );
+
   onUpdateTags(tags: string[]) {
     this.record.tags = tags;
   }
