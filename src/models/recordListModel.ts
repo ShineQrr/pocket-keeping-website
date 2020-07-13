@@ -10,6 +10,7 @@ const recordListModel = {
         recordCopy.createdAt = new Date();
         // 存储的时候存副本
         this.data.push(recordCopy);
+        this.save();
     },
     // 获取数据
     fetch() {

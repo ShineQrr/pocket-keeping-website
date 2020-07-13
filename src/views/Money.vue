@@ -21,11 +21,7 @@ import NumberPad from "@/components/Money/NumberPad.vue";
 import Types from "@/components/Money/Types.vue";
 import Tags from "@/components/Money/Tags.vue";
 import FormItem from "@/components/Money/FormItem.vue";
-import { Component, Watch } from "vue-property-decorator";
-import recordListModel from "@/models/recordListModel";
-
-// 获取localStorage中的数据recordList
-const recordList = recordListModel.fetch();
+import { Component } from "vue-property-decorator";
 
 @Component({
   components: { NumberPad, Types, Tags, FormItem }
@@ -33,7 +29,7 @@ const recordList = recordListModel.fetch();
 export default class Money extends Vue {
   tags = window.tagList;
   record: RecordItem = { tags: [], notes: "", type: "-", amount: 0 };
-  recordList: RecordItem[] = recordList;
+  recordList = window.recordList;
 
   onUpdateTags(tags: string[]) {
     this.record.tags = tags;
@@ -48,13 +44,13 @@ export default class Money extends Vue {
   }
 
   saveRecord() {
-    recordListModel.createItem(this.record);
+    window.createRecord(this.record);
   }
 
-  @Watch("recordList")
-  onRecordListChange() {
-    recordListModel.save();
-  }
+  // @Watch("recordList")
+  // onRecordListChange() {
+  //   recordListModel.save();
+  // }
 }
 </script>
 <style lang="scss">
