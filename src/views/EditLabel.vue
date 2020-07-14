@@ -20,6 +20,7 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import FormItem from "@/components/Money/FormItem.vue";
 import CustomButton from "../components/CustomButton.vue";
+import store from "@/store/index2";
 
 @Component({
   components: { FormItem, CustomButton }
@@ -30,7 +31,7 @@ export default class EditLabel extends Vue {
   created() {
     const id = this.$route.params.id;
     // 根据id获取当前选中的标签名
-    this.tag = window.findTag(id);
+    this.tag = store.findTag(id);
 
     if (!this.tag) {
       this.$router.replace("/404");
@@ -39,13 +40,13 @@ export default class EditLabel extends Vue {
   // 当用户编辑标签名，触发update
   update(name: string) {
     if (this.tag) {
-      window.updateTag(this.tag.id, name);
+      store.updateTag(this.tag.id, name);
     }
   }
 
   remove() {
     if (this.tag) {
-      if (window.removeTag(this.tag.id)) {
+      if (store.removeTag(this.tag.id)) {
         this.$router.back();
       } else {
         window.alert("删除失败");
