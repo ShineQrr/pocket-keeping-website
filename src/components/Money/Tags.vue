@@ -2,7 +2,7 @@
   <div class="tags">
     <ul class="current">
       <li
-        v-for="item in dataSource"
+        v-for="item in tagList "
         :key="item.id"
         @click="toggleTag(item)"
         :class="{selected:selectedTags.includes(item)}"
@@ -21,8 +21,8 @@ import { Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class Tags extends Vue {
-  // dataSource为标签名数组,Money.vue中为tags
-  @Prop() readonly dataSource: string[] | undefined;
+  // tagList 为标签名数组,Money.vue中为tags
+  tagList = window.tagList;
   // selectedTags为选中标签的数组，选中标签改变样式
   selectedTags: string[] = [];
   toggleTag(tag: string) {
@@ -37,11 +37,10 @@ export default class Tags extends Vue {
   // 新增标签
   addTag() {
     const tagName = window.prompt("请输入标签名");
-    if (tagName === "") {
+    if (!tagName) {
       return window.alert("标签名不能为空");
-    } else if (this.dataSource) {
-      this.$emit("update:dataSource", [...this.dataSource, tagName]);
     }
+    window.addTag(tagName);
   }
 }
 </script>

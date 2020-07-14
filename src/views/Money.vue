@@ -2,7 +2,7 @@
   <div>
     <Layout class-prefix="layout">
       <!-- 顶部标签 -->
-      <Tags :data-source.sync="tags" @update:selected="onUpdateTags"></Tags>
+      <Tags></Tags>
       <!-- 备注栏 -->
       <div class="notes-wrapper">
         <FormItem field-name="备注" placeholder="在这里输入备注" @update:value="onUpdateNotes"></FormItem>
@@ -24,16 +24,16 @@ import FormItem from "@/components/Money/FormItem.vue";
 import { Component } from "vue-property-decorator";
 
 @Component({
-  components: { NumberPad, Types, Tags, FormItem }
+  components: { NumberPad, Types, Tags, FormItem },
+  computed: {
+    recordList() {
+      return window.recordList;
+    }
+  }
 })
 export default class Money extends Vue {
-  tags = window.tagList;
   record: RecordItem = { tags: [], notes: "", type: "-", amount: 0 };
-  recordList = window.recordList;
-
-  onUpdateTags(tags: string[]) {
-    this.record.tags = tags;
-  }
+  // recordList = window.recordList;
 
   onUpdateNotes(notes: string) {
     this.record.notes = notes;
@@ -43,14 +43,10 @@ export default class Money extends Vue {
     this.record.amount = parseFloat(value);
   }
 
+  // 点击ok,触发saveRecord,将当前数据存储到localStorage中
   saveRecord() {
     window.createRecord(this.record);
   }
-
-  // @Watch("recordList")
-  // onRecordListChange() {
-  //   recordListModel.save();
-  // }
 }
 </script>
 <style lang="scss">
