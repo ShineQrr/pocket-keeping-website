@@ -22,7 +22,7 @@ import { Component } from "vue-property-decorator";
 @Component({
   computed: {
     tagList() {
-      return [];
+      return this.$store.state.tagList;
     }
   }
 })
@@ -32,6 +32,9 @@ export default class Tags extends Vue {
 
   // selectedTags为选中标签的数组，选中标签改变样式
   selectedTags: string[] = [];
+  created() {
+    this.$store.commit("fetchTags");
+  }
 
   toggleTag(tag: string) {
     const tagIndex = this.selectedTags.indexOf(tag);
@@ -48,7 +51,7 @@ export default class Tags extends Vue {
     if (!tagName) {
       return window.alert("标签名不能为空");
     }
-    //TODO
+    this.$store.commit("addTag", tagName);
     // store.addTag(tagName);
   }
 }
