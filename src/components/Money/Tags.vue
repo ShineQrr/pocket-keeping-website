@@ -18,14 +18,21 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import store from "@/store/index2.ts";
 
-@Component
+@Component({
+  computed: {
+    tagList() {
+      return [];
+    }
+  }
+})
 export default class Tags extends Vue {
   // tagList 为标签名数组,Money.vue中为tags
-  tagList = store.tagList;
+  // tagList = store.fetchTags();
+
   // selectedTags为选中标签的数组，选中标签改变样式
   selectedTags: string[] = [];
+
   toggleTag(tag: string) {
     const tagIndex = this.selectedTags.indexOf(tag);
     if (tagIndex !== -1) {
@@ -41,7 +48,8 @@ export default class Tags extends Vue {
     if (!tagName) {
       return window.alert("标签名不能为空");
     }
-    store.addTag(tagName);
+    //TODO
+    // store.addTag(tagName);
   }
 }
 </script>

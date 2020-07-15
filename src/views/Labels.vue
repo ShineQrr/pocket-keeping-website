@@ -19,17 +19,19 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import CustomButton from "../components/CustomButton.vue";
-import store from "@/store/index2";
 
 @Component({
   components: { CustomButton }
 })
 export default class Labels extends Vue {
-  tags = store.tagList;
+  // tags = store.tagList;
+  // TODO
+  tags = [];
   createTag() {
     const name = window.prompt("请输入标签名");
     if (name) {
-      store.addTag(name);
+      // store.addTag(name);
+      // TODO
     }
   }
 }
