@@ -25,15 +25,14 @@ import CustomButton from "../components/CustomButton.vue";
   components: { FormItem, CustomButton }
 })
 export default class EditLabel extends Vue {
-  tag?: Tag = undefined;
+  get tag() {
+    return this.$store.state.currentTag;
+  }
 
   created() {
-    const id = this.$route.params.id;
     // 根据id获取当前选中的标签名
-    // this.tag = store.findTag(id);
-    // TODO
-    // this.tag={};
-
+    const id = this.$route.params.id;
+    this.$store.commit("setCurrentTag", id);
     if (!this.tag) {
       this.$router.replace("/404");
     }
