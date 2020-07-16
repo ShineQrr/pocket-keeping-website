@@ -10,7 +10,7 @@
     </ul>
     <!-- 新增标签按钮 -->
     <div class="new">
-      <button @click="addTag">新增标签</button>
+      <button @click="createTag">新增标签</button>
     </div>
   </div>
 </template>
@@ -18,15 +18,18 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
+import { mixins } from "vue-class-component";
+import TagHelper from "../../mixins/TagHelper";
 
 @Component({
+  mixins: [TagHelper],
   computed: {
     tagList() {
       return this.$store.state.tagList;
     }
   }
 })
-export default class Tags extends Vue {
+export default class Tags extends mixins(TagHelper) {
   // tagList 为标签名数组,Money.vue中为tags
   // tagList = store.fetchTags();
 
@@ -46,14 +49,14 @@ export default class Tags extends Vue {
     this.$emit("update:selected", this.selectedTags);
   }
   // 新增标签
-  addTag() {
-    const tagName = window.prompt("请输入标签名");
-    if (!tagName) {
-      return window.alert("标签名不能为空");
-    }
-    this.$store.commit("addTag", tagName);
-    // store.addTag(tagName);
-  }
+  // addTag() {
+  //   const tagName = window.prompt("请输入标签名");
+  //   if (!tagName) {
+  //     return window.alert("标签名不能为空");
+  //   }
+  //   this.$store.commit("addTag", tagName);
+  //   // store.addTag(tagName);
+  // }
 }
 </script>
 
