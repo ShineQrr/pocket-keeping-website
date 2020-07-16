@@ -37,6 +37,7 @@ export default class EditLabel extends Vue {
       this.$router.replace("/404");
     }
   }
+
   // 当用户编辑标签名，触发update
   update(name: string) {
     if (this.tag) {

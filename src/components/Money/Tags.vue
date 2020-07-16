@@ -22,14 +22,12 @@ import { mixins } from "vue-class-component";
 import TagHelper from "../../mixins/TagHelper";
 
 @Component({
-  mixins: [TagHelper],
-  computed: {
-    tagList() {
-      return this.$store.state.tagList;
-    }
-  }
+  mixins: [TagHelper]
 })
 export default class Tags extends mixins(TagHelper) {
+  get tagList() {
+    return this.$store.state.tagList;
+  }
   // tagList 为标签名数组,Money.vue中为tags
   // tagList = store.fetchTags();
 

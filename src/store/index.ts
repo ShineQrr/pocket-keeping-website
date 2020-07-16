@@ -41,11 +41,12 @@ const store = new Vuex.Store({
       const names = state.tagList.map(item => item.name);
       if (names.includes(name)) {
         window.alert('标签名重复了');
+      } else {
+        const id = createId().toString();
+        state.tagList.push({ id, name: name });
+        store.commit('saveTags')
+        window.alert('新增标签成功');
       }
-      const id = createId().toString();
-      state.tagList.push({ id, name: name });
-      store.commit('saveTags')
-      window.alert('新增标签成功');
     },
     saveTags(state) {
       window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
