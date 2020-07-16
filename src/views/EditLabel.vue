@@ -30,6 +30,7 @@ export default class EditLabel extends Vue {
   }
 
   created() {
+    this.$store.commit("fetchTags");
     // 根据id获取当前选中的标签名
     const id = this.$route.params.id;
     this.$store.commit("setCurrentTag", id);
@@ -41,19 +42,13 @@ export default class EditLabel extends Vue {
   // 当用户编辑标签名，触发update
   update(name: string) {
     if (this.tag) {
-      // store.updateTag(this.tag.id, name);
-      // TODO
+      this.$store.commit("updateTag", { id: this.tag.id, name });
     }
   }
 
   remove() {
     if (this.tag) {
-      // TODO
-      // if (store.removeTag(this.tag.id)) {
-      //   this.$router.back();
-      // } else {
-      //   window.alert("删除失败");
-      // }
+      this.$store.commit("removeTag", this.tag.id);
     }
   }
 

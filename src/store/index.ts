@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import clone from '@/lib/clone';
 import createId from '../lib/createId';
+import router from '../router/index';
 
 
 Vue.use(Vuex)
@@ -54,7 +55,26 @@ const store = new Vuex.Store({
     setCurrentTag(state, id: string) {
       state.currentTag = state.tagList.filter(t => t.id === id)[0];
     },
-
+    updateTag(state, payload: { id: string; name: string }) {
+      const { id, name } = payload;
+      const idList = state.tagList.map(item => item.id);
+      if (idList.indexOf(id) >= 0) {
+        const names = state.tagList.map(item => item.name);
+        if (names.includes(name)) {
+          window.alert('标签名重复了！')
+        } else {
+          const tag = state.tagList.filter(item => item.id === id)[0];
+          tag.name = name;
+          store.commit('saveTags')
+        }
+      }
+    },
+    removeTag(state, id: string) {
+      const index = state.tagList.findIndex(item => item.id === id);
+      state.tagList.splice(index, 1);
+      store.commit('saveTags')
+      router.back();
+    },
   },
   actions: {
   },
