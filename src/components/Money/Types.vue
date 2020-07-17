@@ -1,8 +1,14 @@
 <template>
   <div>
     <ul class="types">
-      <li :class="value === '-' && 'selected'" @click="selectType('-')">支出</li>
-      <li :class="value === '+' && 'selected'" @click="selectType('+')">收入</li>
+      <li
+        :class="{[classPrefix+'-item']: classPrefix, selected: value==='-'}"
+        @click="selectType('-')"
+      >支出</li>
+      <li
+        :class="{[classPrefix+'-item']: classPrefix, selected: value==='-'}"
+        @click="selectType('+')"
+      >收入</li>
     </ul>
   </div>
 </template>
@@ -15,6 +21,8 @@ import { Component, Prop, Watch } from "vue-property-decorator";
 export default class Types extends Vue {
   // type = "-"; //'-'表示支出，'+'表示收入
   @Prop() readonly value!: string;
+  @Prop(String) classPrefix?: string;
+
   selectType(type: string) {
     // type只能是'-'和'+'中的一个
     if (type !== "-" && type !== "+") {
