@@ -32,22 +32,36 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.x ::v-deep ul {
-  background: white;
-}
-.x ::v-deep li {
-  background: white;
-  &.selected {
-    font-weight: 800;
-    color: skyblue;
-    text-shadow: -1px -1px 0 #fff, 1px 1px 0 #333, 1px 1px 0 #444;
-    &::after {
-      display: none;
+::v-deep {
+  .type-tabs-item {
+    background: #c4c4c4;
+    &.selected {
+      background: white;
+      &::after {
+        display: none;
+      }
     }
   }
+  .interval-tabs-item {
+    height: 48px;
+  }
 }
+// .x ::v-deep ul {
+//   background: white;
+// }
+// .x ::v-deep li {
+//   background: white;
+//   &.selected {
+//     font-weight: 800;
+//     color: skyblue;
+//     text-shadow: -1px -1px 0 #fff, 1px 1px 0 #333, 1px 1px 0 #444;
+//     &::after {
+//       display: none;
+//     }
+//   }
+// }
 
-::v-deep .interval-tabs-item {
-  height: 48px;
-}
+// ::v-deep .interval-tabs-item {
+//   height: 48px;
+// }
 </style>
