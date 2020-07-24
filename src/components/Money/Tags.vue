@@ -22,7 +22,7 @@ import { mixins } from "vue-class-component";
 import TagHelper from "../../mixins/TagHelper";
 
 @Component({
-  mixins: [TagHelper]
+  mixins: [TagHelper],
 })
 export default class Tags extends mixins(TagHelper) {
   get tagList() {
@@ -44,7 +44,7 @@ export default class Tags extends mixins(TagHelper) {
     } else {
       this.selectedTags.push(tag);
     }
-    this.$emit("update:selected", this.selectedTags);
+    this.$emit("update:value", this.selectedTags);
   }
   // 新增标签
   // addTag() {

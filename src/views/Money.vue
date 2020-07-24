@@ -2,10 +2,15 @@
   <div>
     <Layout class-prefix="layout">
       <!-- 顶部标签 -->
-      <Tags></Tags>
+      <Tags @update:value="record.tags = $event"></Tags>
       <!-- 备注栏 -->
       <div class="notes-wrapper">
-        <FormItem field-name="备注" placeholder="在这里输入备注" @update:value="onUpdateNotes"></FormItem>
+        <FormItem
+          field-name="备注"
+          placeholder="在这里输入备注"
+          :value="record.notes"
+          @update:value="onUpdateNotes"
+        ></FormItem>
       </div>
       <!-- 支出/收入 -->
       <!-- <Types :value.sync="record.type"></Types> -->
@@ -49,8 +54,16 @@ export default class Money extends Vue {
 
   // 点击ok,触发saveRecord,将当前数据存储到localStorage中
   saveRecord() {
+    if (!this.record.tags || this.record.tags.length === 0) {
+      window.alert("请至少选择一个标签");
+      return;
+    }
     // store.createRecord(this.record);
     this.$store.commit("createRecord", this.record);
+    if (this.$store.state.createRecordError == null) {
+      window.alert("已保存");
+      this.record.notes = "";
+    }
   }
 }
 </script>

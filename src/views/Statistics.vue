@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
-    <ol>
+    <ol v-if="groupedList.length>0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">
           {{beautify(group.title)}}
@@ -16,6 +16,7 @@
         </ol>
       </li>
     </ol>
+    <div v-else>小主还没有收入呢~</div>
   </Layout>
 </template>
 <script lang="ts">
@@ -30,7 +31,7 @@ import clone from "@/lib/clone";
 })
 export default class Statistics extends Vue {
   tagString(tags: Tag[]) {
-    return tags.length === 0 ? "无" : tags.join(",");
+    return tags.length === 0 ? "无" : tags.map((item) => item.name).join("，");
   }
   beautify(string: string) {
     const day = dayjs(string);
@@ -61,6 +62,9 @@ export default class Statistics extends Vue {
       .sort(
         (a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
       );
+    if (newList.length === 0) {
+      return [];
+    }
     type Result = { title: string; total?: number; items: RecordItem[] }[];
     const result: Result = [
       {
@@ -82,8 +86,8 @@ export default class Statistics extends Vue {
     }
     result.map((group) => {
       group.total = group.items.reduce((sum, item) => {
-        console.log(sum);
-        console.log(item);
+        // console.log(sum);
+        // console.log(item);
         return sum + item.amount;
       }, 0);
     });
