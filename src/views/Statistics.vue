@@ -74,6 +74,25 @@ export default class Statistics extends Vue {
     height: 48px;
   }
 }
+%item {
+  padding: 8px 16px;
+  line-height: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+.title {
+  @extend %item;
+}
+.record {
+  background: white;
+  @extend %item;
+}
+.notes {
+  margin-right: auto;
+  margin-left: 16px;
+  color: #999;
+}
 // .x ::v-deep ul {
 //   background: white;
 // }
