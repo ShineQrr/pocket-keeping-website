@@ -1,29 +1,30 @@
 <template>
-  <div>
-    <Layout>
-      <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
-      <!-- <Tabs class-prefix="interval" :data-source="intervalList" :value.sync="interval" /> -->
-      <ol>
-        <li v-for="(group, index) in groupedList" :key="index">
-          <h3 class="title">
-            {{beautify(group.title)}}
-            <span>￥{{group.total}}</span>
-          </h3>
-        </li>
-      </ol>
-    </Layout>
-  </div>
+  <Layout>
+    <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
+    <ol>
+      <li v-for="(group, index) in groupedList" :key="index">
+        <h3 class="title">
+          {{beautify(group.title)}}
+          <span>￥{{group.total}}</span>
+        </h3>
+        <ol>
+          <li v-for="item in group.items" :key="item.id" class="record">
+            <span>{{tagString(item.tags)}}</span>
+            <span class="notes">{{item.notes}}</span>
+            <span>￥{{item.amount}}</span>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </Layout>
 </template>
-
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Tabs from "@/components/Tabs.vue";
-// import intervalList from "@/constants/intervalList";
 import recordTypeList from "@/constants/recordTypeList";
 import dayjs from "dayjs";
 import clone from "@/lib/clone";
-
 @Component({
   components: { Tabs },
 })
@@ -47,7 +48,6 @@ export default class Statistics extends Vue {
       return day.format("YYYY年M月D日");
     }
   }
-
   get recordList() {
     return (this.$store.state as RootState).recordList;
   }
@@ -56,7 +56,6 @@ export default class Statistics extends Vue {
     if (recordList.length === 0) {
       return [];
     }
-
     const newList = clone(recordList)
       .filter((r) => r.type === this.type)
       .sort(
@@ -90,17 +89,15 @@ export default class Statistics extends Vue {
     });
     return result;
   }
-
   beforeCreate() {
     this.$store.commit("fetchRecords");
   }
-
   type = "-";
   recordTypeList = recordTypeList;
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 ::v-deep {
   .type-tabs-item {
     background: #c4c4c4;
@@ -134,22 +131,4 @@ export default class Statistics extends Vue {
   margin-left: 16px;
   color: #999;
 }
-// .x ::v-deep ul {
-//   background: white;
-// }
-// .x ::v-deep li {
-//   background: white;
-//   &.selected {
-//     font-weight: 800;
-//     color: skyblue;
-//     text-shadow: -1px -1px 0 #fff, 1px 1px 0 #333, 1px 1px 0 #444;
-//     &::after {
-//       display: none;
-//     }
-//   }
-// }
-
-// ::v-deep .interval-tabs-item {
-//   height: 48px;
-// }
 </style>
