@@ -5,12 +5,10 @@
       <Tags @update:value="record.tags = $event"></Tags>
       <!-- 备注栏 -->
       <div class="notes-wrapper">
-        <FormItem
-          field-name="备注"
-          placeholder="在这里输入备注"
-          :value="record.notes"
-          @update:value="onUpdateNotes"
-        ></FormItem>
+        <FormItem field-name="备注" placeholder="在这里输入备注" :value.sync="record.notes"></FormItem>
+      </div>
+      <div class="createdAt">
+        <FormItem field-name="日期" type="date" placeholder="在这里输入日期" :value.sync="record.createdAt" />
       </div>
       <!-- 支出/收入 -->
       <!-- <Types :value.sync="record.type"></Types> -->
@@ -36,7 +34,13 @@ import recordTypeList from "@/constants/recordTypeList";
 })
 export default class Money extends Vue {
   recordTypeList = recordTypeList;
-  record: RecordItem = { tags: [], notes: "", type: "-", amount: 0 };
+  record: RecordItem = {
+    tags: [],
+    notes: "",
+    type: "-",
+    amount: 0,
+    createdAt: new Date().toISOString(),
+  };
   // recordList = window.recordList;
   get recordList() {
     return this.$store.state.recordList;
