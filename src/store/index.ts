@@ -11,6 +11,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     recordList: [],
+    createRecordError: null,
     tagList: [],
     currentTag: undefined
   } as RootState,
@@ -21,7 +22,7 @@ const store = new Vuex.Store({
       state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
     },
     createRecord(state, record: RecordItem) {
-      const recordCopy: RecordItem = clone(record);
+      const recordCopy = clone(record);
       recordCopy.createdAt = recordCopy.createdAt || new Date().toISOString();
       state.recordList && state.recordList.push(recordCopy);
       store.commit('saveRecords')
