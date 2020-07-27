@@ -2,7 +2,7 @@
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
     <div class="chart-wrapper" ref="chartWrapper">
-      <Chart class="chart" :options="x" />
+      <Chart class="chart" :options="chartOptions" />
     </div>
 
     <ol v-if="groupedList.length>0">
@@ -32,7 +32,6 @@ import recordTypeList from "@/constants/recordTypeList";
 import dayjs from "dayjs";
 import clone from "@/lib/clone";
 import Chart from "../components/Chart.vue";
-// const { _ } = require("lodash");
 import * as _ from "lodash";
 import day from "dayjs";
 
@@ -67,18 +66,18 @@ export default class Statistics extends Vue {
     }
   }
 
-  get y() {
+  get chartKeyValueList() {
     const today = new Date();
     const array = [];
     for (let i = 0; i <= 29; i++) {
       // this.recordList = [{date:7.3, value:100}, {date:7.2, value:200}]
       const dateString = day(today).subtract(i, "day").format("YYYY-MM-DD");
-      const found = _.find(this.recordList, {
-        createdAt: dateString,
+      const found = _.find(this.groupedList, {
+        title: dateString,
       });
       array.push({
         date: dateString,
-        value: found ? found.amount : 0,
+        value: found ? found.total : 0,
       });
     }
     array.sort((a, b) => {
@@ -93,9 +92,9 @@ export default class Statistics extends Vue {
     return array;
   }
 
-  get x() {
-    const recordDates = this.y.map((item) => item.date);
-    const recordValues = this.y.map((item) => item.value);
+  get chartOptions() {
+    const recordDates = this.chartKeyValueList.map((item) => item.date);
+    const recordValues = this.chartKeyValueList.map((item) => item.value);
     return {
       // 去掉echarts左右两边的空白
       grid: {
@@ -109,6 +108,11 @@ export default class Statistics extends Vue {
         axisTick: { alignWithLabel: true },
         // x轴的颜色
         axisLine: { lineStyle: { color: "#666" } },
+        axisLabel: {
+          formatter: function (value: string, index: number) {
+            return value.substr(5);
+          },
+        },
       },
       yAxis: {
         type: "value",
@@ -224,6 +228,7 @@ export default class Statistics extends Vue {
 }
 .chart {
   width: 430%;
+  height: 30vh;
   &-wrapper {
     overflow: auto;
     &::-webkit-scrollbar {
