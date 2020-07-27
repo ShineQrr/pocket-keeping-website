@@ -1,7 +1,10 @@
 <template>
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
-    <Chart :options="x" />
+    <div class="chart-wrapper" ref="chartWrapper">
+      <Chart class="chart" :options="x" />
+    </div>
+
     <ol v-if="groupedList.length>0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">
@@ -37,6 +40,11 @@ export default class Statistics extends Vue {
   tagString(tags: Tag[]) {
     return tags.length === 0 ? "无" : tags.map((item) => item.name).join("，");
   }
+
+  mounted() {
+    (this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 9999;
+  }
+
   beautify(string: string) {
     const day = dayjs(string);
     const now = dayjs();
@@ -56,6 +64,11 @@ export default class Statistics extends Vue {
 
   get x() {
     return {
+      // 去掉echarts左右两边的空白
+      grid: {
+        left: 0,
+        right: 0,
+      },
       xAxis: {
         type: "category",
         data: [
@@ -90,12 +103,24 @@ export default class Statistics extends Vue {
           "29",
           "30",
         ],
+        // x轴的刻度与数值对齐
+        axisTick: { alignWithLabel: true },
+        // x轴的颜色
+        axisLine: { lineStyle: { color: "#666" } },
       },
       yAxis: {
         type: "value",
+        show: false,
       },
       series: [
         {
+          symbol: "circle",
+          symbolSize: 12,
+          itemStyle: {
+            borderWidth: 1,
+            color: "#1296db",
+            borderColor: "#1296db",
+          },
           data: [
             820,
             932,
@@ -131,7 +156,12 @@ export default class Statistics extends Vue {
           type: "line",
         },
       ],
-      tooltip: { show: true },
+      tooltip: {
+        show: true,
+        triggerOn: "click",
+        position: "top",
+        formatter: "{c}",
+      },
     };
   }
 
@@ -220,5 +250,14 @@ export default class Statistics extends Vue {
   margin-right: auto;
   margin-left: 16px;
   color: #999;
+}
+.chart {
+  width: 430%;
+  &-wrapper {
+    overflow: auto;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 </style>
