@@ -40,6 +40,7 @@ export default class FormItem extends Vue {
   }
 
   x(isoString: string) {
+    // 对接收的时间格式化
     return dayjs(isoString).format("YYYY-MM-DD");
   }
 }
