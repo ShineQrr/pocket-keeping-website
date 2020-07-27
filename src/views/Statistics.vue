@@ -32,6 +32,9 @@ import recordTypeList from "@/constants/recordTypeList";
 import dayjs from "dayjs";
 import clone from "@/lib/clone";
 import Chart from "../components/Chart.vue";
+// const { _ } = require("lodash");
+import * as _ from "lodash";
+import day from "dayjs";
 
 @Component({
   components: { Tabs, Chart },
@@ -42,7 +45,9 @@ export default class Statistics extends Vue {
   }
 
   mounted() {
-    (this.$refs.chartWrapper as HTMLDivElement).scrollLeft = 9999;
+    const div = this.$refs.chartWrapper as HTMLDivElement;
+    // scrollWidth为最大滚动宽度
+    div.scrollLeft = div.scrollWidth;
   }
 
   beautify(string: string) {
@@ -62,7 +67,35 @@ export default class Statistics extends Vue {
     }
   }
 
+  get y() {
+    const today = new Date();
+    const array = [];
+    for (let i = 0; i <= 29; i++) {
+      // this.recordList = [{date:7.3, value:100}, {date:7.2, value:200}]
+      const dateString = day(today).subtract(i, "day").format("YYYY-MM-DD");
+      const found = _.find(this.recordList, {
+        createdAt: dateString,
+      });
+      array.push({
+        date: dateString,
+        value: found ? found.amount : 0,
+      });
+    }
+    array.sort((a, b) => {
+      if (a.date > b.date) {
+        return 1;
+      } else if (a.date === b.date) {
+        return 0;
+      } else {
+        return -1;
+      }
+    });
+    return array;
+  }
+
   get x() {
+    const recordDates = this.y.map((item) => item.date);
+    const recordValues = this.y.map((item) => item.value);
     return {
       // 去掉echarts左右两边的空白
       grid: {
@@ -71,38 +104,7 @@ export default class Statistics extends Vue {
       },
       xAxis: {
         type: "category",
-        data: [
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          "10",
-          "11",
-          "12",
-          "13",
-          "14",
-          "15",
-          "16",
-          "17",
-          "18",
-          "19",
-          "20",
-          "21",
-          "22",
-          "23",
-          "24",
-          "25",
-          "26",
-          "27",
-          "28",
-          "29",
-          "30",
-        ],
+        data: recordDates,
         // x轴的刻度与数值对齐
         axisTick: { alignWithLabel: true },
         // x轴的颜色
@@ -121,38 +123,7 @@ export default class Statistics extends Vue {
             color: "#1296db",
             borderColor: "#1296db",
           },
-          data: [
-            820,
-            932,
-            901,
-            934,
-            1290,
-            1330,
-            1320,
-            820,
-            932,
-            901,
-            934,
-            1290,
-            1330,
-            1320,
-            820,
-            932,
-            901,
-            934,
-            1290,
-            1330,
-            1320,
-            820,
-            932,
-            901,
-            934,
-            1290,
-            1330,
-            1320,
-            1,
-            2,
-          ],
+          data: recordValues,
           type: "line",
         },
       ],
